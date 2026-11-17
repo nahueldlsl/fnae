@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.tmp
+*.log
+
+# Windows / OS
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.DS_Store
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo

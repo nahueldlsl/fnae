@@ -1,15 +1,18 @@
-#map{
-  zoom: 1;
+#map {
+  transform: scale(1);
+  transform-origin: bottom right;
 }
 
-#power{
-  zoom: 1.7;
+#power {
+  transform: scale(1.25);
+  transform-origin: bottom left;
 }
 
-#record{
-  zoom: 1;
+#record {
+  transform: scale(1);
 }
 
-#timekeeper{
-  zoom: 1.2;
+#timekeeper {
+  transform: scale(1.1);
+  transform-origin: top right;
 }

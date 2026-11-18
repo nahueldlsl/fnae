@@ -1,77 +1,417 @@
-body {
- /* zoom:0.5;*/
+html, body {
   width: 100%;
   height: 100%;
-  background-color:black;
-  margin-left:auto;
-  margin-right:auto; 
-  overflow:hidden;
-/*  image-rendering: pixelated; */
-}
-::-moz-selection{
-background-color:Transparent;
-color:#000;
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  overflow: hidden;
+  user-select: none;
 }
 
 ::selection {
-background-color:Transparent;
-color:#000;
-}
-body::-moz-selection,
-body::selection { ... }
-#camerafeed {
-	z-index: 195;
+  background-color: transparent;
+  color: inherit;
 }
 
+@keyframes pulse {
+  0% { opacity: 0.6; transform: scale(0.98); }
+  50% { opacity: 1; transform: scale(1.02); }
+  100% { opacity: 0.6; transform: scale(0.98); }
+}
+
+@keyframes play {
+  from { transform: translateX(-5%); }
+  to { transform: translateX(-20%); }
+}
+
+@-webkit-keyframes play {
+  from { -webkit-transform: translateX(-5%); }
+  to { -webkit-transform: translateX(-20%); }
+}
+
+.fullscreen-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#startoverlay {
+  position: fixed;
+  inset: 0;
+  background-color: #050505;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+}
+
+#startoverlay h1 {
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  letter-spacing: 6px;
+  color: #e60000;
+  text-shadow: 0 0 15px #ff0000, 2px 2px #000;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+#startoverlay .subtitle {
+  font-size: 1.2rem;
+  letter-spacing: 4px;
+  color: #888;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+#startoverlay .start-btn {
+  border: 2px solid #666;
+  padding: 15px 35px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  animation: pulse 1.8s infinite;
+  color: #fff;
+}
+
+#startoverlay .hint {
+  margin-top: 30px;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+#gameoverstaticimg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+  z-index: 999;
+}
+
+#amduatlogo {
+  position: absolute;
+  opacity: 0;
+  display: none;
+  width: 34.94%;
+  height: 42.22%;
+  background-image: url('graphics/logo.png');
+  background-size: 100% 100%;
+  left: 31.5%;
+  top: 32%;
+}
+
+#transistionanimation {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+}
+
+#nightover {
+  position: absolute;
+  display: none;
+  top: 36.94%;
+  left: 44.92%;
+  z-index: 211;
+  width: 125px;
+  height: 145px;
+}
+
+#nightoverbg { position: absolute; z-index: 5; }
+#nightover5 { position: absolute; z-index: -5; left: 5%; top: 60px; }
+#nightover6 { position: absolute; z-index: -5; left: 5%; top: 108px; }
+#nightoveram { position: absolute; right: 5%; top: 60px; }
+
+#gameover, #newgamebg, #mainmenu, #night7interface {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+#newgamebg { z-index: 99999; }
+.gameover-label { position: absolute; z-index: 210; right: 1%; bottom: 1%; }
+
+#menu-logo {
+  position: absolute;
+  left: 10%;
+  top: 10%;
+  width: 19.5%;
+  height: 31%;
+  image-rendering: pixelated;
+}
+
+.menu-copyright {
+  position: absolute;
+  right: 40px;
+  bottom: 10px;
+  color: #666;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+}
+
+#newbutton { position: absolute; left: 10%; top: 57%; width: 12.57%; height: 4.5%; image-rendering: pixelated; cursor: pointer; }
+#continuebutton { position: absolute; left: 10%; top: 65%; width: 12.57%; height: 4.5%; display: none; image-rendering: pixelated; cursor: pointer; }
+#continuebuttonnight { position: absolute; left: 10%; top: 71%; width: 4%; height: 2%; display: none; image-rendering: pixelated; }
+#continuebuttonnightnumber { position: absolute; left: 14.5%; top: 70.5%; width: 1%; height: 2.9%; display: none; image-rendering: pixelated; }
+#6thnight { position: absolute; left: 10%; top: 75%; width: 12.57%; height: 5.5%; display: none; image-rendering: pixelated; cursor: pointer; }
+#customnight { position: absolute; left: 10%; top: 83%; width: 13.57%; height: 5.5%; display: none; image-rendering: pixelated; cursor: pointer; }
+#selectedarrows { position: absolute; left: 6%; top: 57.5%; width: 3.24%; height: 3.4%; image-rendering: pixelated; }
+#mainmenufazbearanim { position: absolute; width: 100%; height: 100%; z-index: -5; object-fit: cover; }
+#mainmenustaticimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; z-index: -4; pointer-events: none; }
+
+#achievement1, #achievement2, #achievement3 {
+  position: absolute;
+  top: 44%;
+  width: 3.7%;
+  height: 7.09%;
+  image-rendering: pixelated;
+  display: none;
+}
+#achievement1 { left: 10%; }
+#achievement2 { left: 14%; }
+#achievement3 { left: 18%; }
+
+/* Dynamic Custom Night Grid */
+#night7interface {
+  background: #000;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+}
+
+#customnighttitle {
+  position: absolute;
+  left: 50%;
+  top: 4%;
+  transform: translateX(-50%);
+  width: min(320px, 32vw);
+  height: auto;
+}
+
+#customnight-grid {
+  position: absolute;
+  top: 18%;
+  left: 5%;
+  right: 5%;
+  bottom: 18%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5vw;
+}
+
+.cn-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 150px;
+}
+
+.cn-name-banner {
+  height: 28px;
+  width: auto;
+  image-rendering: pixelated;
+}
+
+.cn-name-text {
+  font-size: 1.1rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.cn-portrait {
+  width: min(160px, 14vw);
+  height: min(160px, 14vw);
+  border: 2px solid #444;
+  object-fit: cover;
+}
+
+.cn-ailevel-label {
+  height: 22px;
+  width: auto;
+  image-rendering: pixelated;
+}
+
+.cn-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cn-arrow {
+  width: 24px;
+  height: 36px;
+  cursor: pointer;
+  image-rendering: pixelated;
+}
+
+.cn-digits {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  gap: 4px;
+}
+
+.cn-digit {
+  height: 44px;
+  width: auto;
+  image-rendering: pixelated;
+}
+
+#customnight-back {
+  position: absolute;
+  left: 7%;
+  bottom: 12%;
+  background: #141414;
+  color: #ccc;
+  border: 1px solid #555;
+  padding: 6px 14px;
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+}
+
+#ready {
+  position: absolute;
+  right: 10%;
+  bottom: 5%;
+  cursor: pointer;
+}
+
+#difficultyhelp {
+  position: absolute;
+  left: 7%;
+  bottom: 5%;
+  width: min(620px, 48vw);
+  height: auto;
+}
+
+/* Gameplay Office & Camera HUD */
+#body { display: none; }
+#camerafeedanimation { width: 100%; height: 100%; position: fixed; inset: 0; z-index: 200; display: none; }
+#camerafeed { z-index: 195; display: none; }
 #openclosecamera {
-	z-index: 250 !important;
+  position: absolute;
+  bottom: 35px;
+  right: 10%;
+  z-index: 250 !important;
+  display: none;
+  width: 31.25%;
+  height: 6.55%;
+  cursor: pointer;
 }
 
-#achievement1, #achievement2, #achievement3{
-	content:url(graphics/mainmenu/star.png);
-	position:absolute;
-	top:44%;
-	width:3.7%;
-	height:7.09%;
-	image-rendering: pixelated;
-	display: none;
+#office {
+  position: fixed;
+  width: 122%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
 
-#arrowleft{
-	height:4.81%;
-	width:1.77%;
-	position:absolute;
-	content:url(graphics/mainmenu/customnight/arrowleft.png);
+#officemain {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url('graphics/rooms/office/0.webp');
+  background-size: 100% 100%;
 }
 
-#arrowright{
-	height:4.81%;
-	width:1.77%;
-	position:absolute;
-	content:url(graphics/mainmenu/customnight/arrowright.png);
+#goldenfreddy-overlay {
+  display: none;
+  position: absolute;
+  left: 34%;
+  top: 22%;
+  width: 30%;
+  height: 65%;
+  object-fit: cover;
+  opacity: 0.78;
+  mix-blend-mode: screen;
+  filter: contrast(1.8) hue-rotate(30deg);
+  pointer-events: none;
+  z-index: 150;
 }
 
-#power {
-	z-index:2;
+#doorbuttonsleft {
+  position: absolute;
+  left: 0%;
+  top: 40%;
+  background-image: url('graphics/rooms/office/buttons/buttonleft_1.webp');
+  background-size: 100% 100%;
+  z-index: 200;
+  width: 5%;
+  height: 30%;
 }
 
-#timekeeper {
-	z-index:2;
+#doorbuttonsleft_door, #doorbuttonsleft_light {
+  position: absolute;
+  left: 30%;
+  width: 47%;
+  height: 58px;
+  z-index: 201;
+  cursor: pointer;
+}
+#doorbuttonsleft_door { top: 21%; }
+#doorbuttonsleft_light { top: 53%; }
+
+#doorbuttonsright {
+  position: absolute;
+  right: 1.1%;
+  top: 40%;
+  background-image: url('graphics/rooms/office/buttons/buttonright_1.webp');
+  background-size: 100% 100%;
+  z-index: 200;
+  width: 5%;
+  height: 30%;
 }
 
-#fan {
-	top: 42.3%;
+#doorbuttonsright_door, #doorbuttonsright_light {
+  position: absolute;
+  right: 30%;
+  width: 47%;
+  height: 58px;
+  z-index: 201;
+  cursor: pointer;
 }
+#doorbuttonsright_door { top: 21%; }
+#doorbuttonsright_light { top: 53%; }
 
-#record {
-	display:block;
-}
+#fan { position: absolute; width: 8.7%; height: 27%; left: 48.7%; top: 42.3%; }
+#doorleft { position: absolute; left: 4.5%; top: 0; z-index: 100; width: 15%; height: 100%; pointer-events: none; }
+#doorright { position: absolute; right: 4.5%; top: 0; z-index: 180; width: 15%; height: 100%; pointer-events: none; }
 
-div.map {
-	position:absolute;
-	bottom: 0px;
-	right: 150px;
-}
+#officecameraright { position: absolute; width: 10%; height: 100%; right: 0; top: 0; z-index: 190; }
+#officecameraleft { position: absolute; width: 10%; height: 100%; left: 0; top: 0; z-index: 190; }
+
+#timekeeper { position: absolute; right: 70px; top: 45px; display: none; z-index: 210; }
+#timehour { position: absolute; top: 1px; right: 100px; }
+#timehourextra { position: absolute; right: 70px; }
+#timenight { position: absolute; right: 50px; top: 54px; }
+#timenightnumber { position: absolute; right: 18px; top: 54px; }
+
+#power { position: absolute; left: 9%; top: 77%; display: none; width: 45%; height: 25%; z-index: 210; }
+#powerleft, #powerword, #powerusage { vertical-align: middle; }
+#numberone, #numbertwo, #numberthree { vertical-align: middle; transform: scale(0.75); transform-origin: center; }
+#numberpercent { vertical-align: text-bottom; transform: scale(0.75); transform-origin: center; }
+
+#loadingicon { position: absolute; z-index: 210; left: 44.08%; bottom: 50%; display: none; height: 8.98%; width: 11.82%; }
+
+#record { position: absolute; left: 70px; top: 45px; z-index: 210; display: block; }
+#cameradisabled { position: absolute; left: 40.6%; top: 10%; display: none; width: 19.32%; height: 5%; z-index: 210; }
+#outline { position: absolute; width: 99.5%; height: 99.5%; z-index: 101; pointer-events: none; }
 
 div.main, img.main {
   position: absolute;
@@ -81,168 +421,59 @@ div.main, img.main {
   left: 0;
 }
 
-div.overlay {
-  position: absolute;
-  width: 98%;
-  height: 100%;
-  top: 0;
-  left: 0;
-/*  background-repeat: no-repeat;*/
-}
-
 #static {
-/*	background-image: url("graphics/camera/static_test3.jpg");
-	background: url('graphics/camera/static_test3.jpg') left center;*/
-	display:block;
-	opacity:0.25;
-	position:fixed;
-/*	width: 125%;
-    height: 125%;
-	z-index:77;
-	height:141px;
-	margin-left:659px;
-	top:73px;
-	right: 265px;
-    
-   animation: play .8s steps(1280) infinite;*/
+  display: block;
+  opacity: 0.25;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
 }
 
 #staticimg {
-  display:block;
-  width: 225%;
-  height: 225%;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-#map{
-  z-index:105;
-  bottom:85px;
-  right:2.5%;
+#map {
+  position: absolute;
+  z-index: 205;
+  bottom: 85px;
+  right: 2.5%;
 }
 
-#button-1a {
-position: absolute;
-width:45px;
-top:20px;
-left:110px;
-background-color:#107010;
-    padding:6px;
-    border: 3px solid white;
+#roomname {
+  position: absolute;
+  top: -10%;
+  left: 17%;
+  z-index: 210;
 }
 
-#button-1b{
-position: absolute;
-width:45px;
-top:77px;
-left:85px;
-background-color:#101010;
-    padding:6px;
-    border: 3px solid white;
-}
-
-#button-1c{
-position: absolute;
-width:45px;
-top:155px;
-left:55px;
-background-color:#101010;
-    padding:6px;
-    border: 3px solid white;
-}
-
-#button-2a{
-position: absolute;
-width:41px;
-bottom:97px;
-left:106px;
-background-color:#101010;
-    padding:6px;
-    border: 3px solid white;
-}
-
-#button-2b{
-position: absolute;
-width:41px;
-bottom:47px;
-left:106px;
-background-color:#101010;
-    padding:6px;
-    border: 3px solid white;
-}
-
-#button-5{
-position: absolute;
-width:45px;
-top:94px;
-left:-27px;
-background-color:#101010;
-    padding:6px;
-    border: 3px solid white;
-}
-
-#button-7{
-position: absolute;
-width:45px;
-top:104px;
-right:20px;
-background-color:#101010;
-    padding:6px;
-    border: 3px solid white;
-}
-
-#button-3{
-position: absolute;
-width:45px;
-bottom:102px;
-left:16px;
-background-color:#101010;
-    padding:6px;
-    border: 3px solid white;
-}
-
-#button-4a{
-position: absolute;
-width:41px;
-bottom:97px;
-left:214px;
-background-color:#101010;
-    padding:6px;
-    border: 3px solid white;
-}
-
-#button-4b{
-position: absolute;
-width:41px;
-bottom:47px;
-left:214px;
-background-color:#101010;
-    padding:6px;
-    border: 3px solid white;
-}
-
-#button-6{
-position: absolute;
-width:45px;
-bottom:121px;
-left:307px;
-background-color:#101010;
-    padding:6px;
-    border: 3px solid white;
-}
+#map a { cursor: pointer; }
+#button-1a { position: absolute; width: 45px; top: 20px; left: 110px; background-color: #107010; padding: 6px; border: 3px solid white; }
+#button-1b { position: absolute; width: 45px; top: 77px; left: 85px; background-color: #101010; padding: 6px; border: 3px solid white; }
+#button-1c { position: absolute; width: 45px; top: 155px; left: 55px; background-color: #101010; padding: 6px; border: 3px solid white; }
+#button-2a { position: absolute; width: 41px; bottom: 97px; left: 106px; background-color: #101010; padding: 6px; border: 3px solid white; }
+#button-2b { position: absolute; width: 41px; bottom: 47px; left: 106px; background-color: #101010; padding: 6px; border: 3px solid white; }
+#button-5 { position: absolute; width: 45px; top: 94px; left: -27px; background-color: #101010; padding: 6px; border: 3px solid white; }
+#button-7 { position: absolute; width: 45px; top: 104px; right: 20px; background-color: #101010; padding: 6px; border: 3px solid white; }
+#button-3 { position: absolute; width: 45px; bottom: 102px; left: 16px; background-color: #101010; padding: 6px; border: 3px solid white; }
+#button-4a { position: absolute; width: 41px; bottom: 97px; left: 214px; background-color: #101010; padding: 6px; border: 3px solid white; }
+#button-4b { position: absolute; width: 41px; bottom: 47px; left: 214px; background-color: #101010; padding: 6px; border: 3px solid white; }
+#button-6 { position: absolute; width: 45px; bottom: 121px; left: 307px; background-color: #101010; padding: 6px; border: 3px solid white; }
 
 #room {
   position: fixed;
-  left:0;
-  width: 98%;
-  height: 100%;
-} 
-
-.roomtest {
-  -webkit-animation: play 7s linear infinite alternate;
+  left: 0;
+  top: -16%;
+  width: 129%;
+  height: 129%;
 }
 
-@-webkit-keyframes play {
-    from { -webkit-transform:translateX(-5%) }
-    to { -webkit-transform:translateX(-20%) }
+.roomtest {
+  animation: play 7s linear infinite alternate;
+  -webkit-animation: play 7s linear infinite alternate;
 }
 
 div.camera {
@@ -255,4 +486,5 @@ div.camera {
   text-shadow: #80c080 0 0 1px;
   width: 98%;
   height: 100%;
+  pointer-events: none;
 }

@@ -13,6 +13,7 @@ mimetypes.add_type("video/webm", ".webm")
 mimetypes.add_type("audio/wav", ".wav")
 mimetypes.add_type("audio/ogg", ".ogg")
 mimetypes.add_type("text/javascript", ".js")
+mimetypes.add_type("application/json", ".json")
 mimetypes.add_type("text/css", ".css")
 
 class FNAFRequestHandler(http.server.SimpleHTTPRequestHandler):

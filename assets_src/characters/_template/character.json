@@ -1,0 +1,52 @@
+{
+  "id": "nuevo_personaje",
+  "displayName": "Nuevo Personaje",
+  "customNightOrder": 5,
+  "strategy": "roamer",
+  "side": "left",
+  "startRoom": "1b",
+  "movementIntervalSec": 5.5,
+  "doorWaitChecks": 2,
+  "route": [
+    { "room": "1b", "next": ["5", "2a"] },
+    { "room": "5", "next": ["2a"] },
+    { "room": "2a", "next": ["2b"] },
+    { "room": "2b", "next": ["office"] }
+  ],
+  "retreatRoom": "1b",
+  "roomStates": {},
+  "roomOverlays": {
+    "1b": { "position": [680, 220], "size": [220, 260], "darkness": 0.55 },
+    "2a": { "position": [600, 180], "size": [260, 320], "darkness": 0.45 },
+    "2b": { "position": [520, 140], "size": [340, 420], "darkness": 0.5 }
+  },
+  "sounds": {
+    "windowscare": "windowscare.wav",
+    "jumpscare": "XSCREAM.wav"
+  },
+  "nightLevels": {
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 2,
+    "5": 4,
+    "6": 8
+  },
+  "hourlyBoost": { "2": 0, "3": 1, "4": 1 },
+  "pipeline": {
+    "sourceImage": "source.jpeg",
+    "iconCrop": null,
+    "jumpscareCrop": null,
+    "doorLight": {
+      "enabled": true,
+      "side": "left",
+      "crop": null,
+      "size": [230, 310],
+      "position": [95, 160],
+      "eyes": []
+    },
+    "jumpscareFrames": 18,
+    "jumpscareFrameMs": 45,
+    "jumpscareMode": "center_office"
+  }
+}

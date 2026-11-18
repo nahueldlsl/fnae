@@ -1,0 +1,459 @@
+{
+  "characters": [
+    {
+      "id": "freddy",
+      "displayName": "Freddy (Ezequiel Clásico)",
+      "customNightOrder": 1,
+      "strategy": "freddy",
+      "side": "right",
+      "startRoom": "1a",
+      "movementIntervalSec": 3.02,
+      "doorWaitChecks": 2,
+      "route": [
+        {
+          "room": "1a",
+          "next": [
+            "1b"
+          ]
+        },
+        {
+          "room": "1b",
+          "next": [
+            "7"
+          ]
+        },
+        {
+          "room": "7",
+          "next": [
+            "6"
+          ]
+        },
+        {
+          "room": "6",
+          "next": [
+            "4a"
+          ]
+        },
+        {
+          "room": "4a",
+          "next": [
+            "4b"
+          ]
+        },
+        {
+          "room": "4b",
+          "next": [
+            "office"
+          ]
+        }
+      ],
+      "retreatRoom": "1b",
+      "roomStates": {
+        "1b": [
+          5
+        ],
+        "7": [
+          3
+        ],
+        "4a": [
+          3
+        ],
+        "4b": [
+          4
+        ]
+      },
+      "sounds": {
+        "move": [
+          "Laugh_Giggle_Girl_1d.wav",
+          "Laugh_Giggle_Girl_2d.wav",
+          "Laugh_Giggle_Girl_8d.wav",
+          "deep steps.wav"
+        ],
+        "kitchen": [
+          "kitchen1.wav",
+          "kitchen2.wav",
+          "kitchen3.wav",
+          "kitchen4.wav"
+        ],
+        "jumpscare": "XSCREAM.wav"
+      },
+      "nightLevels": {
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 1,
+        "5": 3,
+        "6": 4
+      },
+      "hourlyBoost": {
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "assets": {
+        "icon": "graphics/characters/freddy/icon.png",
+        "nameBanner": "graphics/mainmenu/customnight/text/freddy.png",
+        "jumpscareFrames": [
+          "graphics/characters/freddy/jumpscare/0.webp",
+          "graphics/characters/freddy/jumpscare/1.webp",
+          "graphics/characters/freddy/jumpscare/2.webp",
+          "graphics/characters/freddy/jumpscare/3.webp",
+          "graphics/characters/freddy/jumpscare/4.webp",
+          "graphics/characters/freddy/jumpscare/5.webp",
+          "graphics/characters/freddy/jumpscare/6.webp",
+          "graphics/characters/freddy/jumpscare/7.webp",
+          "graphics/characters/freddy/jumpscare/8.webp",
+          "graphics/characters/freddy/jumpscare/9.webp",
+          "graphics/characters/freddy/jumpscare/10.webp",
+          "graphics/characters/freddy/jumpscare/11.webp",
+          "graphics/characters/freddy/jumpscare/12.webp",
+          "graphics/characters/freddy/jumpscare/13.webp",
+          "graphics/characters/freddy/jumpscare/14.webp",
+          "graphics/characters/freddy/jumpscare/15.webp",
+          "graphics/characters/freddy/jumpscare/16.webp",
+          "graphics/characters/freddy/jumpscare/17.webp",
+          "graphics/characters/freddy/jumpscare/18.webp",
+          "graphics/characters/freddy/jumpscare/19.webp",
+          "graphics/characters/freddy/jumpscare/20.webp",
+          "graphics/characters/freddy/jumpscare/21.webp",
+          "graphics/characters/freddy/jumpscare/22.webp",
+          "graphics/characters/freddy/jumpscare/23.webp",
+          "graphics/characters/freddy/jumpscare/24.webp",
+          "graphics/characters/freddy/jumpscare/25.webp",
+          "graphics/characters/freddy/jumpscare/26.webp",
+          "graphics/characters/freddy/jumpscare/27.webp",
+          "graphics/characters/freddy/jumpscare/28.webp",
+          "graphics/characters/freddy/jumpscare/29.webp",
+          "graphics/characters/freddy/jumpscare/30.webp"
+        ],
+        "jumpscareFrameMs": 55,
+        "jumpscareSound": "XSCREAM.wav"
+      }
+    },
+    {
+      "id": "bonnie",
+      "displayName": "Bonnie (Ezequiel Buzo Bordó)",
+      "customNightOrder": 2,
+      "strategy": "roamer",
+      "side": "left",
+      "startRoom": "1a",
+      "movementIntervalSec": 4.97,
+      "doorWaitChecks": 2,
+      "route": [
+        {
+          "room": "1a",
+          "next": [
+            "1b",
+            "5"
+          ]
+        },
+        {
+          "room": "1b",
+          "next": [
+            "5",
+            "2a"
+          ]
+        },
+        {
+          "room": "5",
+          "next": [
+            "1b",
+            "2a"
+          ]
+        },
+        {
+          "room": "2a",
+          "next": [
+            "3",
+            "2b"
+          ]
+        },
+        {
+          "room": "3",
+          "next": [
+            "2a",
+            "2b",
+            "office"
+          ]
+        },
+        {
+          "room": "2b",
+          "next": [
+            "3",
+            "office"
+          ]
+        }
+      ],
+      "retreatRoom": "1b",
+      "roomStates": {
+        "1b": [
+          1,
+          2
+        ],
+        "5": [
+          1,
+          2
+        ],
+        "2a": [
+          2
+        ],
+        "3": [
+          2
+        ],
+        "2b": [
+          1,
+          2
+        ]
+      },
+      "sounds": {
+        "windowscare": "windowscare.wav",
+        "jumpscare": "XSCREAM.wav"
+      },
+      "nightLevels": {
+        "1": 0,
+        "2": 3,
+        "3": 0,
+        "4": 2,
+        "5": 5,
+        "6": 10
+      },
+      "hourlyBoost": {
+        "2": 1,
+        "3": 1,
+        "4": 1
+      },
+      "assets": {
+        "icon": "graphics/characters/bonnie/icon.png",
+        "nameBanner": "graphics/mainmenu/customnight/text/bonnie.png",
+        "jumpscareFrames": [
+          "graphics/characters/bonnie/jumpscare/0.webp",
+          "graphics/characters/bonnie/jumpscare/1.webp",
+          "graphics/characters/bonnie/jumpscare/2.webp",
+          "graphics/characters/bonnie/jumpscare/3.webp",
+          "graphics/characters/bonnie/jumpscare/4.webp",
+          "graphics/characters/bonnie/jumpscare/5.webp",
+          "graphics/characters/bonnie/jumpscare/6.webp",
+          "graphics/characters/bonnie/jumpscare/7.webp",
+          "graphics/characters/bonnie/jumpscare/8.webp",
+          "graphics/characters/bonnie/jumpscare/9.webp",
+          "graphics/characters/bonnie/jumpscare/10.webp",
+          "graphics/characters/bonnie/jumpscare/11.webp",
+          "graphics/characters/bonnie/jumpscare/12.webp",
+          "graphics/characters/bonnie/jumpscare/13.webp",
+          "graphics/characters/bonnie/jumpscare/14.webp",
+          "graphics/characters/bonnie/jumpscare/15.webp",
+          "graphics/characters/bonnie/jumpscare/16.webp",
+          "graphics/characters/bonnie/jumpscare/17.webp",
+          "graphics/characters/bonnie/jumpscare/18.webp",
+          "graphics/characters/bonnie/jumpscare/19.webp",
+          "graphics/characters/bonnie/jumpscare/20.webp",
+          "graphics/characters/bonnie/jumpscare/21.webp"
+        ],
+        "jumpscareFrameMs": 45,
+        "jumpscareSound": "XSCREAM.wav",
+        "doorLightFrame": "graphics/characters/bonnie/door_light.webp"
+      }
+    },
+    {
+      "id": "chica",
+      "displayName": "Chica (Ezequiel Escritorio)",
+      "customNightOrder": 3,
+      "strategy": "roamer",
+      "side": "right",
+      "startRoom": "1a",
+      "movementIntervalSec": 4.98,
+      "doorWaitChecks": 2,
+      "route": [
+        {
+          "room": "1a",
+          "next": [
+            "1b"
+          ]
+        },
+        {
+          "room": "1b",
+          "next": [
+            "7",
+            "6"
+          ]
+        },
+        {
+          "room": "7",
+          "next": [
+            "6",
+            "4a"
+          ]
+        },
+        {
+          "room": "6",
+          "next": [
+            "7",
+            "4a"
+          ]
+        },
+        {
+          "room": "4a",
+          "next": [
+            "1b",
+            "4b"
+          ]
+        },
+        {
+          "room": "4b",
+          "next": [
+            "4a",
+            "office"
+          ]
+        }
+      ],
+      "retreatRoom": "4a",
+      "roomStates": {
+        "1b": [
+          3,
+          4
+        ],
+        "7": [
+          1,
+          2
+        ],
+        "4a": [
+          1,
+          2
+        ],
+        "4b": [
+          1,
+          2
+        ]
+      },
+      "sounds": {
+        "kitchen": [
+          "kitchen1.wav",
+          "kitchen2.wav",
+          "kitchen3.wav",
+          "kitchen4.wav"
+        ],
+        "windowscare": "windowscare.wav",
+        "jumpscare": "XSCREAM.wav"
+      },
+      "nightLevels": {
+        "1": 0,
+        "2": 1,
+        "3": 5,
+        "4": 4,
+        "5": 7,
+        "6": 12
+      },
+      "hourlyBoost": {
+        "2": 0,
+        "3": 1,
+        "4": 1
+      },
+      "assets": {
+        "icon": "graphics/characters/chica/icon.png",
+        "nameBanner": "graphics/mainmenu/customnight/text/chica.png",
+        "jumpscareFrames": [
+          "graphics/characters/chica/jumpscare/0.webp",
+          "graphics/characters/chica/jumpscare/1.webp",
+          "graphics/characters/chica/jumpscare/2.webp",
+          "graphics/characters/chica/jumpscare/3.webp",
+          "graphics/characters/chica/jumpscare/4.webp",
+          "graphics/characters/chica/jumpscare/5.webp",
+          "graphics/characters/chica/jumpscare/6.webp",
+          "graphics/characters/chica/jumpscare/7.webp",
+          "graphics/characters/chica/jumpscare/8.webp",
+          "graphics/characters/chica/jumpscare/9.webp",
+          "graphics/characters/chica/jumpscare/10.webp",
+          "graphics/characters/chica/jumpscare/11.webp",
+          "graphics/characters/chica/jumpscare/12.webp",
+          "graphics/characters/chica/jumpscare/13.webp",
+          "graphics/characters/chica/jumpscare/14.webp",
+          "graphics/characters/chica/jumpscare/15.webp"
+        ],
+        "jumpscareFrameMs": 45,
+        "jumpscareSound": "XSCREAM.wav",
+        "doorLightFrame": "graphics/characters/chica/door_light.webp"
+      }
+    },
+    {
+      "id": "foxy",
+      "displayName": "Foxy (El Amigo Gritando)",
+      "customNightOrder": 4,
+      "strategy": "cove_rusher",
+      "side": "left",
+      "startRoom": "1c",
+      "movementIntervalSec": 5.01,
+      "doorWaitChecks": 2,
+      "route": [
+        {
+          "room": "1c",
+          "next": [
+            "2a"
+          ]
+        },
+        {
+          "room": "2a",
+          "next": [
+            "office"
+          ]
+        }
+      ],
+      "retreatRoom": "1b",
+      "roomStates": {
+        "1c": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "sounds": {
+        "pirateSong": "pirate_song2.wav",
+        "run": "run.wav",
+        "knock": "DOOR_POUNDING_ME_D0291401.wav",
+        "jumpscare": "XSCREAM.wav"
+      },
+      "nightLevels": {
+        "1": 0,
+        "2": 1,
+        "3": 2,
+        "4": 6,
+        "5": 5,
+        "6": 16
+      },
+      "hourlyBoost": {
+        "2": 0,
+        "3": 1,
+        "4": 1
+      },
+      "assets": {
+        "icon": "graphics/characters/foxy/icon.png",
+        "nameBanner": "graphics/mainmenu/customnight/text/foxy.png",
+        "jumpscareFrames": [
+          "graphics/characters/foxy/jumpscare/0.webp",
+          "graphics/characters/foxy/jumpscare/1.webp",
+          "graphics/characters/foxy/jumpscare/2.webp",
+          "graphics/characters/foxy/jumpscare/3.webp",
+          "graphics/characters/foxy/jumpscare/4.webp",
+          "graphics/characters/foxy/jumpscare/5.webp",
+          "graphics/characters/foxy/jumpscare/6.webp",
+          "graphics/characters/foxy/jumpscare/7.webp",
+          "graphics/characters/foxy/jumpscare/8.webp",
+          "graphics/characters/foxy/jumpscare/9.webp",
+          "graphics/characters/foxy/jumpscare/10.webp",
+          "graphics/characters/foxy/jumpscare/11.webp",
+          "graphics/characters/foxy/jumpscare/12.webp",
+          "graphics/characters/foxy/jumpscare/13.webp",
+          "graphics/characters/foxy/jumpscare/14.webp",
+          "graphics/characters/foxy/jumpscare/15.webp",
+          "graphics/characters/foxy/jumpscare/16.webp",
+          "graphics/characters/foxy/jumpscare/17.webp",
+          "graphics/characters/foxy/jumpscare/18.webp",
+          "graphics/characters/foxy/jumpscare/19.webp",
+          "graphics/characters/foxy/jumpscare/20.webp"
+        ],
+        "jumpscareFrameMs": 35,
+        "jumpscareSound": "XSCREAM.wav"
+      }
+    }
+  ]
+}

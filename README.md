@@ -80,21 +80,18 @@ start.bat
 
 ---
 
-## 🛠️ Pipeline de Transformación de Imágenes
+## 🛠️ Pipeline de Personajes y Assets (`assets_src/`)
 
-El proyecto incluye scripts en Python ([tools/transform_ezequiel.py](tools/transform_ezequiel.py)) que procesan las fotos originales mediante **Pillow**:
-- **Detección y recorte de rostros**: Extracción precisa de Ezequiel y su amigo en shock.
-- **Máscaras Alfa Suaves (`feathered masks`)**: Bordes elípticos con desenfoque gaussiano para fusionar los rostros con la oficina sin costuras rectangulares.
-- **Efectos de Terror FNAF**:
-  - Filtros de contraste dinámico y reducción de brillo.
-  - Scanlines CRT simuladas.
-  - Efecto de aberración cromática (separación de canales R y B).
-  - Ojos incandescentes con resplandor concéntrico.
+El proyecto cuenta con una carpeta dedicada en [assets_src/](assets_src/README_ASSETS.md) para cambiar caras o agregar personajes nuevos (5to, 6to, etc.) sin editar el código del juego:
+- **Fotos y configuración por personaje**: `assets_src/characters/<id>/character.json` + `source.jpeg`.
+- **Plantilla para nuevos personajes**: `assets_src/characters/_template/character.json`.
+- **Pipeline unificado en Python**: [tools/build_characters.py](tools/build_characters.py) genera los íconos, jumpscares, luces de puerta, overlays de cámaras y el manifiesto dinámico [config/characters.json](config/characters.json).
 
-Para re-ejecutar el pipeline de imágenes o verificar la integridad:
+Para reconstruir assets o verificar la integridad:
 ```bash
-python tools/transform_ezequiel.py
-python tools/verify_assets.py
+python3 tools/build_characters.py
+python3 tools/verify_assets.py
+node --test tests/*.test.mjs
 ```
 
 ---
@@ -103,29 +100,27 @@ python tools/verify_assets.py
 
 ```
 fnae/
-├── graphics/               # Más de 360 texturas, animaciones y salas WebP/PNG
-│   ├── camera/             # Mapas, estática, indicadores de batería y hora
-│   ├── gameover/           # Jumpscares completos de Freddy, Bonnie, Chica y Foxy
-│   ├── mainmenu/           # Menú interactivo, logo, estrellas y Custom Night
-│   ├── rooms/              # Fondos de salas de cámaras y oficina
-│   └── transition/         # Animaciones de transición estática
+├── assets_src/             # Fuentes editables de personajes, fotos y fondos base
+│   ├── base_graphics/      # Fondos limpios de oficina y escenario
+│   └── characters/         # Carpetas por personaje (freddy, bonnie, chica, foxy, _template)
+├── config/                 # Manifiestos declarativos del motor
+│   ├── characters.json     # Registro dinámico de personajes, rutas, IA y assets
+│   └── game.json           # Duración de horas, consumo eléctrico, salas y audios
+├── graphics/               # Texturas, animaciones y salas WebP/PNG generadas
 ├── sounds/                 # 27 efectos de sonido y pistas ambientales (.wav, .ogg)
-├── script/                 # Lógica del motor del juego en JavaScript
-│   ├── ai.js               # Inteligencia artificial de los 4 animatrónicos
-│   ├── animation.js        # Secuencias de jumpscares y puertas
-│   ├── loading.js          # Precarga de assets y sincronización
-│   ├── main.js             # Bucle principal, control de noches y fin de juego
-│   ├── sound.js            # Sistema de audio multicanal
-│   ├── ui.js               # Botones, paneo y monitor de cámaras
-│   └── variables.js        # Estados del juego, contadores y dificultad
-├── tools/                  # Herramientas de automatización en Python
-│   ├── transform_ezequiel.py # Pipeline de procesamiento de imágenes con Pillow
-│   └── verify_assets.py    # Validador de integridad de archivos y assets
-├── index.html              # Estructura principal y overlay de inicio
-├── feed.css / 1080.css     # Estilos responsivos de la oficina y cámaras
+├── script/                 # Motor modular ES6 (SOLID / GRASP / DRY / Singleton)
+│   ├── core/               # EventBus, TimerRegistry, SaveRepository, AudioManager, AssetLoader
+│   ├── systems/            # NightClock, PowerSystem, OfficeSystem, CameraSystem
+│   ├── ai/                 # AnimatronicEntity, MovementStrategies, AIManager
+│   ├── ui/                 # AnimationController, MenuController, CustomNightView, OfficeView, CameraView
+│   ├── GameEngine.js       # Orquestador principal de partida
+│   └── app.js              # Composition root
+├── tests/                  # Pruebas unitarias automatizadas (`node --test`)
+├── tools/                  # Herramientas en Python (build_characters.py, verify_assets.py)
+├── index.html              # Estructura HTML5 limpia
+├── feed.css / 1080.css     # Estilos responsivos estándar
 ├── run_game.py             # Servidor HTTP local con tipos MIME correctos
-├── start.bat               # Lanzador rápido para Windows
-└── README.md
+└── start.bat               # Lanzador rápido para Windows
 ```
 
 ---

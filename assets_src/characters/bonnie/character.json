@@ -1,0 +1,59 @@
+{
+  "id": "bonnie",
+  "displayName": "Bonnie (Ezequiel Buzo Bordó)",
+  "customNightOrder": 2,
+  "strategy": "roamer",
+  "side": "left",
+  "startRoom": "1a",
+  "movementIntervalSec": 4.97,
+  "doorWaitChecks": 2,
+  "route": [
+    { "room": "1a", "next": ["1b", "5"] },
+    { "room": "1b", "next": ["5", "2a"] },
+    { "room": "5", "next": ["1b", "2a"] },
+    { "room": "2a", "next": ["3", "2b"] },
+    { "room": "3", "next": ["2a", "2b", "office"] },
+    { "room": "2b", "next": ["3", "office"] }
+  ],
+  "retreatRoom": "1b",
+  "roomStates": {
+    "1b": [1, 2],
+    "5": [1, 2],
+    "2a": [2],
+    "3": [2],
+    "2b": [1, 2]
+  },
+  "sounds": {
+    "windowscare": "windowscare.wav",
+    "jumpscare": "XSCREAM.wav"
+  },
+  "nightLevels": {
+    "1": 0,
+    "2": 3,
+    "3": 0,
+    "4": 2,
+    "5": 5,
+    "6": 10
+  },
+  "hourlyBoost": { "2": 1, "3": 1, "4": 1 },
+  "pipeline": {
+    "sourceImage": "source.jpeg",
+    "iconCrop": [200, 50, 1100, 950],
+    "jumpscareCrop": [180, 80, 1150, 1100],
+    "doorLight": {
+      "enabled": true,
+      "side": "left",
+      "crop": [120, 60, 1250, 1250],
+      "size": [230, 310],
+      "position": [95, 160],
+      "eyes": [[90, 100], [155, 120]],
+      "legacyPath": "graphics/rooms/office/1_lightleft.webp"
+    },
+    "jumpscareFrames": 22,
+    "jumpscareFrameMs": 45,
+    "jumpscareMode": "lunge_left",
+    "nameBanner": "graphics/mainmenu/customnight/text/bonnie.png",
+    "legacyJumpscareDir": "graphics/gameover/bonny",
+    "legacyIconPath": "graphics/mainmenu/customnight/bunny.png"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "id": "foxy",
+  "displayName": "Foxy (El Amigo Gritando)",
+  "customNightOrder": 4,
+  "strategy": "cove_rusher",
+  "side": "left",
+  "startRoom": "1c",
+  "movementIntervalSec": 5.01,
+  "route": [
+    { "room": "1c", "next": ["2a"] },
+    { "room": "2a", "next": ["office"] }
+  ],
+  "roomStates": {
+    "1c": [0, 1, 2, 3]
+  },
+  "sounds": {
+    "pirateSong": "pirate_song2.wav",
+    "run": "run.wav",
+    "knock": "DOOR_POUNDING_ME_D0291401.wav",
+    "jumpscare": "XSCREAM.wav"
+  },
+  "nightLevels": {
+    "1": 0,
+    "2": 1,
+    "3": 2,
+    "4": 6,
+    "5": 5,
+    "6": 16
+  },
+  "hourlyBoost": { "2": 0, "3": 1, "4": 1 },
+  "pipeline": {
+    "sourceImage": "source.jpeg",
+    "iconCrop": [150, 950, 600, 1450],
+    "jumpscareCrop": [150, 950, 600, 1450],
+    "jumpscareFrames": 21,
+    "jumpscareFrameMs": 35,
+    "jumpscareMode": "lunge_left_doorway",
+    "nameBanner": "graphics/mainmenu/customnight/text/foxy.png",
+    "legacyJumpscareDir": "graphics/rooms/office/foxxy",
+    "legacyIconPath": "graphics/mainmenu/customnight/foxxy.png"
+  }
+}

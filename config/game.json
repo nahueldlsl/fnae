@@ -1,0 +1,81 @@
+{
+  "title": "Five Nights at Ezequiel's",
+  "night": {
+    "hourDurationsSec": [90, 89, 89, 89, 89, 89],
+    "maxHour": 6,
+    "hourlyBoostsAt": {
+      "2": true,
+      "3": true,
+      "4": true
+    }
+  },
+  "power": {
+    "initialUnits": 999,
+    "usageUnitPerBarPerSec": 1.04,
+    "passiveDrainIntervalSec": {
+      "1": 0,
+      "2": 6,
+      "3": 5,
+      "4": 4,
+      "5": 3,
+      "6": 3,
+      "7": 3
+    },
+    "powerOutageMinDelaySec": 10,
+    "powerOutageMaxDelaySec": 45
+  },
+  "goldenFreddy": {
+    "enabled": true,
+    "triggerRoom": "2b",
+    "chance": 0.015,
+    "sound": "XSCREAM2.wav",
+    "reactionWindowMs": 4500
+  },
+  "calls": {
+    "1": "sounds/calls/night1.wav",
+    "2": "sounds/calls/night2.wav",
+    "3": "sounds/calls/night3.wav",
+    "4": "sounds/calls/night4.wav",
+    "5": "sounds/calls/night5.wav"
+  },
+  "rooms": [
+    { "id": "1a", "name": "Show Stage", "movingCamera": true, "images": 7 },
+    { "id": "1b", "name": "Dining Area", "movingCamera": true, "images": 6 },
+    { "id": "1c", "name": "Pirate Cove", "movingCamera": true, "images": 4 },
+    { "id": "2a", "name": "West Hall", "movingCamera": true, "images": 3 },
+    { "id": "2b", "name": "West Hall Corner", "movingCamera": true, "images": 3 },
+    { "id": "3", "name": "Supply Closet", "movingCamera": false, "images": 3 },
+    { "id": "4a", "name": "East Hall", "movingCamera": true, "images": 4 },
+    { "id": "4b", "name": "East Hall Corner", "movingCamera": true, "images": 5 },
+    { "id": "5", "name": "Backstage", "movingCamera": true, "images": 3 },
+    { "id": "6", "name": "Kitchen", "movingCamera": false, "images": 0, "audioOnly": true },
+    { "id": "7", "name": "Restrooms", "movingCamera": true, "images": 4 }
+  ],
+  "sounds": [
+    "chimes 2.wav",
+    "blip3.wav",
+    "CAMERA_VIDEO_LOA_60105303.wav",
+    "DOOR_POUNDING_ME_D0291401.wav",
+    "knock2.wav",
+    "pirate_song2.wav",
+    "powerdown.wav",
+    "put_down.wav",
+    "run.wav",
+    "SFXBible_12478.wav",
+    "static2.wav",
+    "windowscare.wav",
+    "XSCREAM.wav",
+    "XSCREAM2.wav",
+    "freddy/poweroutmusic.ogg",
+    "error.wav",
+    "kitchen1.wav",
+    "kitchen2.wav",
+    "kitchen3.wav",
+    "kitchen4.wav",
+    "Laugh_Giggle_Girl_1d.wav",
+    "Laugh_Giggle_Girl_2d.wav",
+    "Laugh_Giggle_Girl_8d.wav",
+    "deep steps.wav",
+    "CROWD_SMALL_CHIL_EC049202.wav"
+  ]
+}

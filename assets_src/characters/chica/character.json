@@ -1,6 +1,6 @@
 {
   "id": "chica",
-  "displayName": "Chica (Ezequiel Escritorio)",
+  "displayName": "Chica (Santi)",
   "customNightOrder": 3,
   "strategy": "roamer",
   "side": "right",
@@ -22,6 +22,12 @@
     "4a": [1, 2],
     "4b": [1, 2]
   },
+  "roomOverlays": {
+    "1b": { "position": [860, 180], "size": [240, 290], "darkness": 0.45 },
+    "7": { "position": [580, 170], "size": [250, 300], "darkness": 0.45 },
+    "4a": { "position": [680, 180], "size": [260, 320], "darkness": 0.46 },
+    "4b": { "position": [620, 110], "size": [380, 460], "darkness": 0.50 }
+  },
   "sounds": {
     "kitchen": ["kitchen1.wav", "kitchen2.wav", "kitchen3.wav", "kitchen4.wav"],
     "windowscare": "windowscare.wav",
@@ -38,15 +44,16 @@
   "hourlyBoost": { "2": 0, "3": 1, "4": 1 },
   "pipeline": {
     "sourceImage": "source.jpeg",
-    "iconCrop": [400, 250, 1150, 1000],
-    "jumpscareCrop": [450, 300, 1100, 1050],
+    "sourceEyes": [[845, 660], [1095, 680]],
+    "iconCrop": [340, 80, 1280, 1020],
+    "jumpscareCrop": [320, 60, 1280, 1180],
     "doorLight": {
       "enabled": true,
       "side": "right",
-      "crop": [400, 250, 1150, 1000],
-      "size": [220, 280],
-      "position": [1340, 170],
-      "eyes": [[95, 115], [145, 115]],
+      "crop": [260, 40, 1300, 1360],
+      "size": [230, 300],
+      "position": [1335, 165],
+      "glowingEyes": false,
       "legacyPath": "graphics/rooms/office/2_lightright.webp"
     },
     "jumpscareFrames": 16,

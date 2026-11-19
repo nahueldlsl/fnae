@@ -2,7 +2,7 @@
   "characters": [
     {
       "id": "freddy",
-      "displayName": "Freddy (Ezequiel Clásico)",
+      "displayName": "Freddy (Ezequiel)",
       "customNightOrder": 1,
       "strategy": "freddy",
       "side": "right",
@@ -127,12 +127,18 @@
           "graphics/characters/freddy/jumpscare/30.webp"
         ],
         "jumpscareFrameMs": 55,
-        "jumpscareSound": "XSCREAM.wav"
+        "jumpscareSound": "XSCREAM.wav",
+        "roomOverlays": {
+          "1b": "graphics/characters/freddy/room_1b.webp",
+          "7": "graphics/characters/freddy/room_7.webp",
+          "4a": "graphics/characters/freddy/room_4a.webp",
+          "4b": "graphics/characters/freddy/room_4b.webp"
+        }
       }
     },
     {
       "id": "bonnie",
-      "displayName": "Bonnie (Ezequiel Buzo Bordó)",
+      "displayName": "Bonnie (Ezequiel)",
       "customNightOrder": 2,
       "strategy": "roamer",
       "side": "left",
@@ -251,12 +257,19 @@
         ],
         "jumpscareFrameMs": 45,
         "jumpscareSound": "XSCREAM.wav",
-        "doorLightFrame": "graphics/characters/bonnie/door_light.webp"
+        "doorLightFrame": "graphics/characters/bonnie/door_light.webp",
+        "roomOverlays": {
+          "1b": "graphics/characters/bonnie/room_1b.webp",
+          "5": "graphics/characters/bonnie/room_5.webp",
+          "2a": "graphics/characters/bonnie/room_2a.webp",
+          "3": "graphics/characters/bonnie/room_3.webp",
+          "2b": "graphics/characters/bonnie/room_2b.webp"
+        }
       }
     },
     {
       "id": "chica",
-      "displayName": "Chica (Ezequiel Escritorio)",
+      "displayName": "Chica (Santi)",
       "customNightOrder": 3,
       "strategy": "roamer",
       "side": "right",
@@ -371,12 +384,18 @@
         ],
         "jumpscareFrameMs": 45,
         "jumpscareSound": "XSCREAM.wav",
-        "doorLightFrame": "graphics/characters/chica/door_light.webp"
+        "doorLightFrame": "graphics/characters/chica/door_light.webp",
+        "roomOverlays": {
+          "1b": "graphics/characters/chica/room_1b.webp",
+          "7": "graphics/characters/chica/room_7.webp",
+          "4a": "graphics/characters/chica/room_4a.webp",
+          "4b": "graphics/characters/chica/room_4b.webp"
+        }
       }
     },
     {
       "id": "foxy",
-      "displayName": "Foxy (El Amigo Gritando)",
+      "displayName": "Foxy (Horacio)",
       "customNightOrder": 4,
       "strategy": "cove_rusher",
       "side": "left",

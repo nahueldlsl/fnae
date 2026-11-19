@@ -1,6 +1,6 @@
 {
   "id": "freddy",
-  "displayName": "Freddy (Ezequiel Clásico)",
+  "displayName": "Freddy (Ezequiel)",
   "customNightOrder": 1,
   "strategy": "freddy",
   "side": "right",
@@ -20,6 +20,12 @@
     "4a": [3],
     "4b": [4]
   },
+  "roomOverlays": {
+    "1b": { "position": [680, 170], "size": [220, 260], "darkness": 0.40 },
+    "7": { "position": [940, 170], "size": [240, 290], "darkness": 0.38 },
+    "4a": { "position": [680, 180], "size": [250, 300], "darkness": 0.42 },
+    "4b": { "position": [620, 110], "size": [380, 460], "darkness": 0.48 }
+  },
   "sounds": {
     "move": ["Laugh_Giggle_Girl_1d.wav", "Laugh_Giggle_Girl_2d.wav", "Laugh_Giggle_Girl_8d.wav", "deep steps.wav"],
     "kitchen": ["kitchen1.wav", "kitchen2.wav", "kitchen3.wav", "kitchen4.wav"],
@@ -37,9 +43,10 @@
   "pipeline": {
     "sourceImage": "source.jpeg",
     "jumpscareSourceImage": "source_intense.jpeg",
-    "iconCrop": [350, 300, 1150, 1100],
-    "jumpscareCrop": [120, 220, 960, 1180],
-    "glowingEyes": [[150, 205], [225, 207]],
+    "sourceEyes": [[665, 875], [870, 910]],
+    "jumpscareSourceEyes": [[380, 845], [690, 865]],
+    "iconCrop": [350, 420, 1150, 1220],
+    "jumpscareCrop": [120, 320, 960, 1320],
     "jumpscareFrames": 31,
     "jumpscareFrameMs": 55,
     "jumpscareMode": "center_office",
@@ -48,17 +55,16 @@
     "legacyIconPath": "graphics/mainmenu/customnight/freddy.png",
     "stageOverlay": {
       "enabled": true,
-      "crop": [200, 150, 1300, 1400],
+      "crop": [260, 380, 1220, 1460],
       "size": [360, 420],
       "position": [630, 140],
-      "eyes": [[150, 205], [225, 207]]
+      "glowingEyes": false
     },
     "powerout": {
       "enabled": true,
-      "crop": [300, 250, 1200, 1200],
+      "crop": [320, 400, 1180, 1320],
       "size": [300, 320],
-      "position": [130, 170],
-      "eyes": [[125, 135], [185, 135]]
+      "position": [130, 170]
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "id": "foxy",
-  "displayName": "Foxy (El Amigo Gritando)",
+  "displayName": "Foxy (Horacio)",
   "customNightOrder": 4,
   "strategy": "cove_rusher",
   "side": "left",
@@ -30,8 +30,16 @@
   "hourlyBoost": { "2": 0, "3": 1, "4": 1 },
   "pipeline": {
     "sourceImage": "source.jpeg",
-    "iconCrop": [150, 950, 600, 1450],
-    "jumpscareCrop": [150, 950, 600, 1450],
+    "jumpscareSourceImage": "source_jumpscare.jpeg",
+    "sourceEyes": [[595, 950], [875, 950]],
+    "coveStages": true,
+    "hallwayRun": {
+      "enabled": true,
+      "frames": 31,
+      "outDir": "graphics/rooms/2a/foxxy"
+    },
+    "iconCrop": [340, 500, 1140, 1300],
+    "jumpscareCrop": [0, 420, 1080, 1580],
     "jumpscareFrames": 21,
     "jumpscareFrameMs": 35,
     "jumpscareMode": "lunge_left_doorway",

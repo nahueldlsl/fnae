@@ -35,6 +35,7 @@
   "hourlyBoost": { "2": 0, "3": 1, "4": 1 },
   "pipeline": {
     "sourceImage": "source.jpeg",
+    "sourceEyes": null,
     "iconCrop": null,
     "jumpscareCrop": null,
     "doorLight": {
@@ -43,7 +44,7 @@
       "crop": null,
       "size": [230, 310],
       "position": [95, 160],
-      "eyes": []
+      "glowingEyes": false
     },
     "jumpscareFrames": 18,
     "jumpscareFrameMs": 45,

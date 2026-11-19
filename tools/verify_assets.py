@@ -105,9 +105,19 @@ def verify_all() -> bool:
         "graphics/rooms/office/powerout0.webp",
         "graphics/rooms/office/powerout1.webp",
         "graphics/rooms/1a/0.webp",
+        "graphics/rooms/1a/1.webp",
+        "graphics/rooms/1a/2.webp",
+        "graphics/rooms/1a/3.webp",
+        "graphics/rooms/1a/5.webp",
+        "graphics/rooms/1c/0.webp",
+        "graphics/rooms/1c/1.webp",
+        "graphics/rooms/1c/2.webp",
+        "graphics/rooms/1c/3.webp",
         "graphics/gameover/gameoverimg.webp",
         "graphics/mainmenu/star.png",
     ]
+    for i in range(31):
+        static_checks.append(f"graphics/rooms/2a/foxxy/{i}.webp")
     for i in range(10):
         static_checks.append(f"graphics/mainmenu/customnight/text/{i}.png")
     for i in range(1, 8):

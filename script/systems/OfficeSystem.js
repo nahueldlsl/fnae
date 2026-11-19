@@ -78,8 +78,17 @@ export class OfficeSystem {
   jamSide(side) {
     const ctrl = this.#sides[side];
     if (!ctrl) return;
+    const wasLightOn = ctrl.lightOn;
     ctrl.jammed = true;
     ctrl.lightOn = false;
+    if (wasLightOn) {
+      this.#eventBus.emit('office:lightChanged', {
+        side,
+        on: false,
+        doorClosed: ctrl.doorClosed,
+        occupant: ctrl.occupant,
+      });
+    }
     this.#eventBus.emit('office:jammed', { side });
   }
 

@@ -4,8 +4,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { EventBus } from '../script/core/EventBus.js';
+import { TimerRegistry } from '../script/core/TimerRegistry.js';
 import { SaveRepository } from '../script/core/SaveRepository.js';
 import { GameEngine } from '../script/GameEngine.js';
+import { AnimationController } from '../script/ui/AnimationController.js';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const gameConfig = JSON.parse(fs.readFileSync(path.join(ROOT, 'config/game.json'), 'utf8'));
@@ -102,13 +104,20 @@ test('PowerSystem calculates usage bars (1..5), passive drain, and allows 6 AM s
   assert.equal(engine.power.usageBars, 2);
   engine.office.toggleLight('right');
   assert.equal(engine.power.usageBars, 3);
-  engine.camera.toggleMonitor();
-  assert.equal(engine.power.usageBars, 4);
 
-  // Turning on left light automatically turns off right light (keeps bars at 4)
+  // Turning on left light automatically turns off right light (keeps bars at 3)
   engine.office.toggleLight('left');
   assert.equal(engine.office.isLightOn('right'), false);
   assert.equal(engine.office.isLightOn('left'), true);
+  assert.equal(engine.power.usageBars, 3);
+
+  // Opening monitor turns off active hall light (base + leftDoor + monitor = 3)
+  engine.camera.toggleMonitor();
+  assert.equal(engine.office.isLightOn('left'), false);
+  assert.equal(engine.power.usageBars, 3);
+
+  // Closing right door while monitor is open pushes usage to 4
+  engine.office.toggleDoor('right');
   assert.equal(engine.power.usageBars, 4);
 
   // Deplete remaining power
@@ -241,4 +250,122 @@ test('SaveRepository migrates legacy keys and awards stars accurately', () => {
 
   repo.recordNightVictory(7, true);
   assert.equal(repo.getStars(), 3);
+});
+
+test('OfficeSystem.jamSide turns off active light and recalculates power usage', () => {
+  const { engine } = createTestEngine();
+  engine.startNight(2, null, { autoStartLoop: false });
+
+  engine.office.toggleLight('left');
+  assert.equal(engine.office.isLightOn('left'), true);
+  assert.equal(engine.power.usageBars, 2);
+
+  engine.office.jamSide('left');
+  assert.equal(engine.office.isLightOn('left'), false);
+  assert.equal(engine.power.usageBars, 1);
+  assert.equal(engine.office.toggleDoor('left'), false);
+  assert.equal(engine.office.toggleLight('left'), false);
+});
+
+test('GameEngine pause/resume freezes clock, power, and AI cleanly', () => {
+  const { engine, eventBus } = createTestEngine({ rng: () => 0.0 });
+  let pausedEvents = 0;
+  let resumedEvents = 0;
+  eventBus.on('game:paused', () => pausedEvents++);
+  eventBus.on('game:resumed', () => resumedEvents++);
+
+  engine.startNight(5, null, { autoStartLoop: false });
+  engine.step(5);
+  const unitsBeforePause = engine.power.units;
+  const elapsedBeforePause = engine.clock.totalElapsed;
+
+  assert.equal(engine.pause(), true);
+  assert.equal(engine.phase, 'paused');
+  assert.equal(pausedEvents, 1);
+
+  for (let i = 0; i < 20; i++) engine.step(1);
+  assert.equal(engine.power.units, unitsBeforePause);
+  assert.equal(engine.clock.totalElapsed, elapsedBeforePause);
+
+  assert.equal(engine.resume(), true);
+  assert.equal(engine.phase, 'playing');
+  assert.equal(resumedEvents, 1);
+
+  engine.step(2);
+  assert.ok(engine.clock.totalElapsed > elapsedBeforePause);
+  assert.ok(engine.power.units < unitsBeforePause);
+});
+
+test('GameEngine stays in ended phase after victory or jumpscare (no re-entrancy)', () => {
+  const { engine, eventBus } = createTestEngine();
+  let wins = 0;
+  eventBus.on('game:nightWon', () => wins++);
+
+  engine.startNight(1, null, { autoStartLoop: false });
+  for (let i = 0; i < 535; i++) engine.clock.tick(1);
+
+  assert.equal(engine.phase, 'ended');
+  assert.equal(wins, 1);
+
+  // Re-emitting sixAM while ended must not record a second victory
+  eventBus.emit('clock:sixAM', { totalElapsed: 535 });
+  assert.equal(wins, 1);
+});
+
+test('AnimationController cancels previous sequence on the same channel', async () => {
+  const timers = new TimerRegistry();
+  const anim = new AnimationController(timers);
+  const log = [];
+
+  anim.playSequence({
+    frames: ['A1', 'A2', 'A3'],
+    frameMs: 25,
+    channel: 'door:left',
+    onFrame: (f) => log.push(f),
+    onComplete: () => log.push('A_DONE'),
+  });
+
+  // Immediately supersede with B on the same channel
+  anim.playSequence({
+    frames: ['B1', 'B2'],
+    frameMs: 15,
+    channel: 'door:left',
+    onFrame: (f) => log.push(f),
+    onComplete: () => log.push('B_DONE'),
+  });
+
+  await new Promise((r) => setTimeout(r, 120));
+  assert.deepEqual(log, ['B1', 'B2', 'B_DONE']);
+  timers.clearAll();
+});
+
+test('RoamerStrategy prevents two characters from overwriting the same door occupant', () => {
+  const extraLeft = {
+    id: 'extra_left',
+    displayName: 'Extra Left',
+    customNightOrder: 5,
+    strategy: 'roamer',
+    side: 'left',
+    startRoom: '2b',
+    movementIntervalSec: 1,
+    route: [{ room: '2b', next: ['office'] }],
+    retreatRoom: '1b',
+    roomStates: {},
+    nightLevels: { 7: 20 },
+    assets: {},
+  };
+
+  const { engine } = createTestEngine({ rng: () => 0.0, extraCharacters: [extraLeft] });
+  engine.startNight(
+    7,
+    { freddy: 0, bonnie: 0, chica: 0, foxy: 0, extra_left: 20 },
+    { autoStartLoop: false }
+  );
+
+  // Simulate Bonnie already occupying left door
+  engine.office.setDoorOccupant('left', 'bonnie');
+
+  engine.ai.tick(1);
+  assert.equal(engine.office.getDoorOccupant('left'), 'bonnie');
+  assert.equal(engine.ai.getEntity('extra_left').currentRoom, '1b');
 });

@@ -96,7 +96,11 @@ export class GameEngine {
 
     this.eventBus.on('office:doorChanged', () => this.#syncPowerUsage());
     this.eventBus.on('office:lightChanged', () => this.#syncPowerUsage());
+    this.eventBus.on('office:jammed', () => this.#syncPowerUsage());
     this.eventBus.on('camera:toggled', ({ open }) => {
+      if (open) {
+        this.office.turnOffLights();
+      }
       this.#syncPowerUsage();
       this.ai.onMonitorStateChanged(open);
     });
@@ -170,7 +174,32 @@ export class GameEngine {
     }
   }
 
-  resetSimulation() {
+  pause() {
+    if (this.#phase !== 'playing') return false;
+    this.#phase = 'paused';
+    this.eventBus.emit('game:paused', { night: this.#currentNight });
+    return true;
+  }
+
+  resume() {
+    if (this.#phase !== 'paused') return false;
+    this.#phase = 'playing';
+    this.eventBus.emit('game:resumed', { night: this.#currentNight });
+    return true;
+  }
+
+  togglePause() {
+    if (this.#phase === 'playing') return this.pause();
+    if (this.#phase === 'paused') return this.resume();
+    return false;
+  }
+
+  returnToMenu() {
+    this.resetSimulation('menu');
+    this.eventBus.emit('game:returnedToMenu', {});
+  }
+
+  resetSimulation(nextPhase = 'menu') {
     if (this.#tickIntervalId != null) {
       this.timers.clearInterval(this.#tickIntervalId);
       this.#tickIntervalId = null;
@@ -180,11 +209,11 @@ export class GameEngine {
     this.clock.reset();
     this.office.reset();
     this.camera.reset();
-    this.#phase = 'menu';
+    this.#phase = nextPhase;
   }
 
   destroy() {
-    this.resetSimulation();
+    this.resetSimulation('menu');
   }
 
   #handlePowerOutage() {
@@ -219,8 +248,7 @@ export class GameEngine {
 
   #handleVictory() {
     if (this.#phase === 'ended') return;
-    this.#phase = 'ended';
-    this.resetSimulation();
+    this.resetSimulation('ended');
     const saveState = this.saveRepository.recordNightVictory(
       this.#currentNight,
       this.#isAll20Mode
@@ -233,8 +261,7 @@ export class GameEngine {
 
   #handleJumpscare(payload) {
     if (this.#phase === 'ended') return;
-    this.#phase = 'ended';
-    this.resetSimulation();
+    this.resetSimulation('ended');
     this.eventBus.emit('game:jumpscare', payload);
   }
 }

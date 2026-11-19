@@ -139,6 +139,7 @@ export class AIManager {
       monitorOpen: this.#cameraSystem.isOpen,
       currentCameraRoom: this.#cameraSystem.currentRoom,
       isDoorClosed: (side) => this.#officeSystem.isDoorClosed(side),
+      getDoorOccupant: (side) => this.#officeSystem.getDoorOccupant(side),
       setDoorOccupant: (side, charId) => this.#officeSystem.setDoorOccupant(side, charId),
       jamSide: (side) => this.#officeSystem.jamSide(side),
       consumePowerPercent: (pct) => this.#powerSystem.consumePercent(pct),

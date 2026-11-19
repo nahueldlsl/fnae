@@ -14,7 +14,6 @@ export class CameraSystem {
   #monitorOpen = false;
   #currentRoom = '1a';
   #staticLocked = false;
-  #goldenFreddyActive = false;
 
   get isOpen() {
     return this.#monitorOpen;
@@ -40,7 +39,6 @@ export class CameraSystem {
     this.#monitorOpen = false;
     this.#currentRoom = '1a';
     this.#staticLocked = false;
-    this.#goldenFreddyActive = false;
   }
 
   setMonitorOpen(open) {
@@ -100,19 +98,19 @@ export class CameraSystem {
       return `graphics/rooms/1c/${stage}.webp`;
     }
 
-    // Support custom overlays for 5th+ characters first when occupying a room
-    for (const occ of occupants) {
-      const overlay = occ.config.assets?.roomOverlays?.[roomId];
-      if (overlay) return overlay;
-    }
-
-    // Priority order matches FNAF 1 visibility: Freddy > Chica > Bonnie
+    // Priority order matches FNAF 1 visibility: Freddy > Chica > Bonnie > custom
     const priority = ['freddy', 'chica', 'bonnie'];
     occupants.sort((a, b) => {
       const ia = priority.indexOf(a.id);
       const ib = priority.indexOf(b.id);
       return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
     });
+
+    // Prefer character-specific roomOverlays (AI-composited or custom 5th+ characters)
+    for (const occ of occupants) {
+      const overlay = occ.config.assets?.roomOverlays?.[roomId];
+      if (overlay) return overlay;
+    }
 
     for (const occ of occupants) {
       const states = occ.config.roomStates?.[roomId];

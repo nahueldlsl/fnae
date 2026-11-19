@@ -3,16 +3,28 @@
  * 6 AM victory screen, and Game Over screen transitions.
  */
 export class MenuController {
-  constructor({ audio, saveRepository, animations, timers, onStartNight, onOpenCustomNight }) {
+  constructor({
+    audio,
+    saveRepository,
+    animations,
+    timers,
+    onStartNight,
+    onOpenCustomNight,
+    onResumeNight,
+    onReturnToMenu,
+  }) {
     this.#audio = audio;
     this.#save = saveRepository;
     this.#animations = animations;
     this.#timers = timers;
     this.#onStartNight = onStartNight;
     this.#onOpenCustomNight = onOpenCustomNight;
+    this.#onResumeNight = onResumeNight;
+    this.#onReturnToMenu = onReturnToMenu;
     this.#menuAnimInterval = null;
     this.#staticFadeTimer = null;
     this.#overlayDismissed = false;
+    this.#isLaunching = false;
   }
 
   #audio;
@@ -21,9 +33,12 @@ export class MenuController {
   #timers;
   #onStartNight;
   #onOpenCustomNight;
+  #onResumeNight;
+  #onReturnToMenu;
   #menuAnimInterval;
   #staticFadeTimer;
   #overlayDismissed;
+  #isLaunching;
 
   init() {
     const startOverlay = document.getElementById('startoverlay');
@@ -48,7 +63,49 @@ export class MenuController {
       el.addEventListener('click', item.action);
     }
 
+    const resumeBtn = document.getElementById('pause-resume');
+    if (resumeBtn) {
+      resumeBtn.addEventListener('click', () => {
+        if (this.#onResumeNight) this.#onResumeNight();
+      });
+    }
+    const muteBtn = document.getElementById('pause-mute');
+    if (muteBtn) {
+      muteBtn.addEventListener('click', () => {
+        this.#audio.toggleMute();
+        this.syncMuteButton();
+      });
+    }
+    const backMenuBtn = document.getElementById('pause-menu');
+    if (backMenuBtn) {
+      backMenuBtn.addEventListener('click', () => {
+        this.hidePauseOverlay();
+        this.#audio.stopAll();
+        this.#audio.stopAmbient();
+        if (this.#onReturnToMenu) this.#onReturnToMenu();
+        this.showMainMenu();
+      });
+    }
+
     this.#timers.setTimeout(() => this.#playIntro(), 1200);
+  }
+
+  showPauseOverlay() {
+    this.syncMuteButton();
+    const el = document.getElementById('pauseoverlay');
+    if (el) el.style.display = 'flex';
+  }
+
+  hidePauseOverlay() {
+    const el = document.getElementById('pauseoverlay');
+    if (el) el.style.display = 'none';
+  }
+
+  syncMuteButton() {
+    const muteBtn = document.getElementById('pause-mute');
+    if (muteBtn) {
+      muteBtn.textContent = this.#audio.isMuted ? 'SONIDO: SILENCIADO (M)' : 'SONIDO: ACTIVO (M)';
+    }
   }
 
   #unlockAndStart() {
@@ -69,7 +126,7 @@ export class MenuController {
     if (vid) vid.play().catch(() => {});
 
     const menuEl = document.getElementById('mainmenu');
-    if (menuEl && menuEl.style.display !== 'none') {
+    if (menuEl && window.getComputedStyle(menuEl).display !== 'none') {
       this.#audio.play('static2.wav', 0.3, true);
     }
   }
@@ -96,6 +153,7 @@ export class MenuController {
   }
 
   showMainMenu() {
+    this.#isLaunching = false;
     this.#stopMenuAnimations();
     this.#hideAllScreens();
 
@@ -157,7 +215,7 @@ export class MenuController {
       }
     };
 
-    this.#menuAnimInterval = globalThis.setInterval(() => {
+    this.#menuAnimInterval = this.#timers.setInterval(() => {
       const rand = Math.random();
       if (rand > 0.8) {
         scheduleFlicker(6, 65, 3);
@@ -175,7 +233,7 @@ export class MenuController {
     const el = document.getElementById('mainmenustaticimg');
     if (!el) return;
     let high = false;
-    this.#staticFadeTimer = globalThis.setInterval(() => {
+    this.#staticFadeTimer = this.#timers.setInterval(() => {
       high = !high;
       el.style.transition = 'opacity 1.8s ease-in-out';
       el.style.opacity = high ? '0.6' : '0.28';
@@ -184,11 +242,11 @@ export class MenuController {
 
   #stopMenuAnimations() {
     if (this.#menuAnimInterval != null) {
-      globalThis.clearInterval(this.#menuAnimInterval);
+      this.#timers.clearInterval(this.#menuAnimInterval);
       this.#menuAnimInterval = null;
     }
     if (this.#staticFadeTimer != null) {
-      globalThis.clearInterval(this.#staticFadeTimer);
+      this.#timers.clearInterval(this.#staticFadeTimer);
       this.#staticFadeTimer = null;
     }
   }
@@ -206,6 +264,13 @@ export class MenuController {
       'gameover',
       'gameoverstaticimg',
       'loadingicon',
+      'camerafeedanimation',
+      'transistionanimation',
+      'amduatlogo',
+      'officecameraleft',
+      'officecameraright',
+      'goldenfreddy-overlay',
+      'pauseoverlay',
     ];
     for (const id of ids) {
       const el = document.getElementById(id);
@@ -214,6 +279,8 @@ export class MenuController {
   }
 
   #startNewGame() {
+    if (this.#isLaunching) return;
+    this.#isLaunching = true;
     this.#stopMenuAnimations();
     this.#audio.stopAll();
     this.#save.setNight(1);
@@ -232,6 +299,8 @@ export class MenuController {
   }
 
   #continueGame() {
+    if (this.#isLaunching) return;
+    this.#isLaunching = true;
     this.#stopMenuAnimations();
     this.#audio.stopAll();
     const nightToPlay = Math.min(5, this.#save.getNight());
@@ -239,12 +308,15 @@ export class MenuController {
   }
 
   #startSixthNight() {
+    if (this.#isLaunching) return;
+    this.#isLaunching = true;
     this.#stopMenuAnimations();
     this.#audio.stopAll();
     this.#launchWithLoading(6);
   }
 
   #openCustomNight() {
+    if (this.#isLaunching) return;
     this.#stopMenuAnimations();
     this.#hideAllScreens();
     const vid = document.getElementById('gameoverstaticimg');
@@ -253,6 +325,8 @@ export class MenuController {
   }
 
   launchNight(nightNumber, customLevels = null) {
+    if (this.#isLaunching) return;
+    this.#isLaunching = true;
     this.#stopMenuAnimations();
     this.#audio.stopAll();
     this.#launchWithLoading(nightNumber, customLevels);
@@ -270,6 +344,7 @@ export class MenuController {
     }
 
     this.#timers.setTimeout(() => {
+      this.#isLaunching = false;
       if (loadingEl) loadingEl.style.display = 'none';
       this.#onStartNight(nightNumber, customLevels);
     }, 3000);

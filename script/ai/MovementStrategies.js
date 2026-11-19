@@ -48,7 +48,8 @@ export class RoamerStrategy {
     if (!target) return;
 
     if (target === 'office') {
-      if (ctx.isDoorClosed(entity.side)) {
+      const currentOccupant = ctx.getDoorOccupant ? ctx.getDoorOccupant(entity.side) : null;
+      if (ctx.isDoorClosed(entity.side) || (currentOccupant && currentOccupant !== entity.id)) {
         const retreat = entity.config.retreatRoom || '1b';
         this.#moveToRoom(entity, retreat, ctx);
       } else {

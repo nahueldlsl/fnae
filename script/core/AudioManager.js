@@ -19,6 +19,8 @@ export class AudioManager {
     this.#ambientLoops = [];
     this.#unlocked = false;
     this.#debugSuppress = false;
+    this.#muted = false;
+    this.#ambientRunning = false;
   }
 
   #tracks;
@@ -26,9 +28,37 @@ export class AudioManager {
   #ambientLoops;
   #unlocked;
   #debugSuppress;
+  #muted;
+  #ambientRunning;
+
+  get isMuted() {
+    return this.#muted;
+  }
 
   setDebugSuppress(flag) {
     this.#debugSuppress = Boolean(flag);
+  }
+
+  setMuted(flag) {
+    this.#muted = Boolean(flag);
+    for (const inst of this.#activeInstances) {
+      inst.muted = this.#muted;
+    }
+    for (const track of this.#tracks.values()) {
+      track.muted = this.#muted;
+    }
+    if (this.#ambientRunning) {
+      for (const entry of this.#ambientLoops) {
+        try {
+          entry.loop.volume(this.#muted ? 0 : entry.volume);
+        } catch (_e) {}
+      }
+    }
+    return this.#muted;
+  }
+
+  toggleMute() {
+    return this.setMuted(!this.#muted);
   }
 
   preload(soundList) {
@@ -90,6 +120,7 @@ export class AudioManager {
       instance.volume = Math.max(0, Math.min(1, volume));
     }
 
+    instance.muted = this.#muted;
     this.#activeInstances.add(instance);
     const cleanup = () => {
       if (!instance.loop) {
@@ -116,6 +147,7 @@ export class AudioManager {
         if (!res.ok) return null;
         const audio = new Audio(path);
         audio.volume = 0.65;
+        audio.muted = this.#muted;
         this.#activeInstances.add(audio);
         audio.addEventListener('ended', () => this.#activeInstances.delete(audio), { once: true });
         audio.play().catch(() => {});
@@ -161,15 +193,20 @@ export class AudioManager {
 
   startAmbient() {
     if (this.#debugSuppress) return;
+    if (this.#ambientRunning) {
+      this.stopAmbient();
+    }
+    this.#ambientRunning = true;
     for (const entry of this.#ambientLoops) {
       try {
         entry.loop.start(entry.id);
-        entry.loop.volume(entry.volume);
+        entry.loop.volume(this.#muted ? 0 : entry.volume);
       } catch (_e) {}
     }
   }
 
   stopAmbient() {
+    this.#ambientRunning = false;
     for (const entry of this.#ambientLoops) {
       try {
         entry.loop.stop();

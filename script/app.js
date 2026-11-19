@@ -57,6 +57,8 @@ async function bootstrap() {
     animations,
     timers,
     onOpenCustomNight: () => customNightView.show(),
+    onResumeNight: () => engine.resume(),
+    onReturnToMenu: () => engine.returnToMenu(),
     onStartNight: (nightNumber, customLevels) => {
       assetLoader.preloadGameAssets(gameConfig, characterConfigs);
       engine.startNight(nightNumber, customLevels);
@@ -68,13 +70,29 @@ async function bootstrap() {
     },
   });
 
+  eventBus.on('game:paused', () => {
+    audio.stopAmbient();
+    menuController.showPauseOverlay();
+  });
+
+  eventBus.on('game:resumed', () => {
+    menuController.hidePauseOverlay();
+    audio.startAmbient();
+  });
+
+  eventBus.on('audio:muteChanged', () => {
+    menuController.syncMuteButton();
+  });
+
   eventBus.on('game:nightWon', () => {
+    menuController.hidePauseOverlay();
     officeView.stopLoops();
     cameraView.stopLoops();
     menuController.showNightWonScreen();
   });
 
   eventBus.on('game:jumpscare', (payload) => {
+    menuController.hidePauseOverlay();
     const frames = payload?.character?.assets?.jumpscareFrames?.length || 20;
     const frameMs = payload?.character?.assets?.jumpscareFrameMs || 45;
     menuController.showGameOverSequence(frames * frameMs + 150);

@@ -73,6 +73,7 @@ export class CameraView {
     bus.on('game:nightWon', () => this.stopLoops());
     bus.on('game:jumpscare', () => this.stopLoops());
     bus.on('game:powerOutageStarted', () => this.stopLoops());
+    bus.on('game:returnedToMenu', () => this.stopLoops());
   }
 
   #onNightStart() {
@@ -92,6 +93,10 @@ export class CameraView {
   }
 
   stopLoops() {
+    this.#animations.cancelChannel('camera:flip');
+    this.#animations.cancelChannel('foxy:sprint');
+    const animEl = document.getElementById('camerafeedanimation');
+    if (animEl) animEl.style.display = 'none';
     if (this.#recordInterval != null) {
       globalThis.clearInterval(this.#recordInterval);
       this.#recordInterval = null;
@@ -168,11 +173,13 @@ export class CameraView {
     }
 
     if (meta?.audioOnly) {
+      if (roomImg) roomImg.style.display = 'none';
       if (disabledBanner) disabledBanner.style.display = 'block';
       if (staticDiv) staticDiv.style.opacity = '1';
       return;
     }
 
+    if (roomImg) roomImg.style.display = 'block';
     if (disabledBanner) disabledBanner.style.display = 'none';
     this.#pulseStatic(175);
 
@@ -208,6 +215,7 @@ export class CameraView {
     this.#animations.playSequence({
       frames,
       frameMs: 35,
+      channel: 'foxy:sprint',
       onFrame: (src) => {
         if (this.#engine.camera.currentRoom === '2a') {
           roomImg.src = src;

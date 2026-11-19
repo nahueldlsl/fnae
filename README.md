@@ -21,10 +21,10 @@ Bienvenido a tu nuevo trabajo de verano en la oficina de vigilancia. Tu tarea es
 
 | Animatrónico | Personaje en FNAE | Comportamiento & Ubicación |
 |---|---|---|
-| 🐻 **Freddy Fazbear** | **Ezequiel Clásico** | Comienza en el escenario (**CAM 1A**), avanza sigilosamente en la oscuridad, te acecha en la puerta derecha y canta la caja de música cuando se corta la luz. |
-| 🐰 **Bonnie** | **Ezequiel (Buzo Bordó)** | Rápido y agresivo. Acecha por el pasillo izquierdo y se asoma por la ventana de tu puerta izquierda. Si prendes la luz y lo ves, ¡cierra la puerta de inmediato! |
-| 🐥 **Chica** | **Ezequiel (Escritorio)** | Merodea por el lado derecho y la cocina (escucharás ollas y platos). Aparece en la ventana de tu puerta derecha con mirada fija. |
-| 🦊 **Foxy** | **El Amigo Gritando** | Escondido tras la cortina de la Pirate Cove (**CAM 1C**). Si no lo miras con frecuencia, saldrá disparado corriendo por el pasillo (**CAM 2A**) directo hacia tu puerta izquierda. |
+| 🐻 **Freddy Fazbear** | **Ezequiel** | Comienza en el escenario (**CAM 1A**), avanza sigilosamente en la oscuridad, te acecha en la puerta derecha y canta la caja de música cuando se corta la luz. |
+| 🐰 **Bonnie** | **Ezequiel (Buzo Bordó)** | Rápido y agresivo. Acecha por el pasillo izquierdo y se asoma por la puerta izquierda. Si prendes la luz y lo ves, ¡cierra la puerta de inmediato! |
+| 🐥 **Chica** | **Santi** | Merodea por el lado derecho y la cocina (escucharás ollas y platos). Aparece en la puerta derecha con mirada fija. |
+| 🦊 **Foxy** | **Horacio** | Escondido tras la cortina de la Pirate Cove (**CAM 1C**). Si no lo miras con frecuencia, saldrá disparado corriendo por el pasillo (**CAM 2A**) directo hacia tu puerta izquierda. |
 
 ---
 
@@ -73,10 +73,13 @@ start.bat
 ## 🕹️ Controles
 
 - **Mover la vista de la oficina**: Mueve el cursor hacia los extremos izquierdo o derecho de la pantalla.
-- **Puertas**: Haz clic en el botón superior rojo/verde `DOOR`.
-- **Luces de pasillo**: Haz clic en el botón inferior blanco `LIGHT`.
-- **Monitor de cámaras**: Pasa el ratón sobre la barra inferior blanca `[ CAMERA ]`.
+- **Puertas**: Haz clic en el botón superior rojo/verde `DOOR` (o usa las teclas **`Q`** izquierda / **`E`** derecha).
+- **Luces de pasillo**: Haz clic en el botón inferior blanco `LIGHT` (o usa las teclas **`A`** izquierda / **`D`** derecha).
+- **Monitor de cámaras**: Haz clic en la barra inferior blanca `[ CAMERA ]` (o presiona **`Espacio`**).
 - **Cambiar de cámara**: Haz clic sobre cualquiera de los botones de la mini-guía del mapa.
+- **Pausa**: Presiona **`Esc`** para pausar/reanudar la partida, ver controles o volver al menú.
+- **Silenciar audio**: Presiona **`M`** en cualquier momento para silenciar o reactivar el sonido.
+- **Custom Night**: Usa los presets rápidos (`20/20/20/20`, `Noche 5`, `Solo Foxy`, `Reset 0`) o **`Shift + clic`** en las flechas para saltos de ±5.
 
 ---
 
@@ -91,7 +94,7 @@ Para reconstruir assets o verificar la integridad:
 ```bash
 python3 tools/build_characters.py
 python3 tools/verify_assets.py
-node --test tests/*.test.mjs
+npm test
 ```
 
 ---

@@ -50,7 +50,7 @@ export class CustomNightView {
       card.dataset.characterId = ch.id;
 
       const header = ch.assets?.nameBanner
-        ? `<img class="cn-name-banner" src="${ch.assets.nameBanner}" alt="${ch.displayName}" />`
+        ? `<img class="cn-name-banner" src="${ch.assets.nameBanner}" alt="${ch.displayName}" /><div class="cn-name-sub">${ch.displayName}</div>`
         : `<div class="cn-name-text">${ch.displayName}</div>`;
 
       card.innerHTML = `
@@ -67,14 +67,39 @@ export class CustomNightView {
         </div>
       `;
 
-      card.querySelector('.cn-arrow-left').addEventListener('click', () => {
-        this.#setLevel(ch.id, (this.#levels.get(ch.id) ?? 0) - 1);
+      card.querySelector('.cn-arrow-left').addEventListener('click', (e) => {
+        const step = e.shiftKey ? 5 : 1;
+        this.#setLevel(ch.id, (this.#levels.get(ch.id) ?? 0) - step);
       });
-      card.querySelector('.cn-arrow-right').addEventListener('click', () => {
-        this.#setLevel(ch.id, (this.#levels.get(ch.id) ?? 0) + 1);
+      card.querySelector('.cn-arrow-right').addEventListener('click', (e) => {
+        const step = e.shiftKey ? 5 : 1;
+        this.#setLevel(ch.id, (this.#levels.get(ch.id) ?? 0) + step);
       });
 
       grid.appendChild(card);
+    }
+
+    const presetsRoot = document.getElementById('customnight-presets');
+    if (presetsRoot) {
+      presetsRoot.innerHTML = '';
+      const presets = [
+        { label: '20/20/20/20', map: () => 20 },
+        { label: 'Noche 5', map: (ch) => Number(ch.nightLevels?.['5'] ?? 5) },
+        { label: 'Solo Foxy', map: (ch) => (ch.id === 'foxy' ? 20 : 0) },
+        { label: 'Reset 0', map: () => 0 },
+      ];
+      for (const preset of presets) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'cn-preset-btn';
+        btn.textContent = preset.label;
+        btn.addEventListener('click', () => {
+          for (const ch of this.#characters) {
+            this.#setLevel(ch.id, preset.map(ch));
+          }
+        });
+        presetsRoot.appendChild(btn);
+      }
     }
 
     const readyBtn = document.getElementById('ready');

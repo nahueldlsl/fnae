@@ -31,13 +31,7 @@
     "sound": "XSCREAM2.wav",
     "reactionWindowMs": 4500
   },
-  "calls": {
-    "1": "sounds/calls/night1.wav",
-    "2": "sounds/calls/night2.wav",
-    "3": "sounds/calls/night3.wav",
-    "4": "sounds/calls/night4.wav",
-    "5": "sounds/calls/night5.wav"
-  },
+  "calls": {},
   "rooms": [
     { "id": "1a", "name": "Show Stage", "movingCamera": true, "images": 7 },
     { "id": "1b", "name": "Dining Area", "movingCamera": true, "images": 6 },

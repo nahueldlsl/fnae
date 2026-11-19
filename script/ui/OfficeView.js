@@ -13,6 +13,7 @@ export class OfficeView {
     this.#panRafId = null;
     this.#fanInterval = null;
     this.#powerOutageInterval = null;
+    this.#scaredOccupant = { left: null, right: null };
     this.#characterAssets = new Map(
       (engine.characterConfigs || []).map((c) => [c.id, c])
     );
@@ -27,6 +28,7 @@ export class OfficeView {
   #panRafId;
   #fanInterval;
   #powerOutageInterval;
+  #scaredOccupant;
   #characterAssets;
 
   init() {
@@ -35,6 +37,7 @@ export class OfficeView {
       const lightBtn = document.getElementById(`doorbuttons${side}_light`);
       if (doorBtn) {
         doorBtn.addEventListener('click', () => {
+          if (this.#engine.phase !== 'playing' || this.#engine.camera.isOpen) return;
           if (this.#engine.office.toggleDoor(side)) {
             this.#audio.play('SFXBible_12478.wav', 0.25);
           } else {
@@ -44,6 +47,7 @@ export class OfficeView {
       }
       if (lightBtn) {
         lightBtn.addEventListener('click', () => {
+          if (this.#engine.phase !== 'playing' || this.#engine.camera.isOpen) return;
           if (!this.#engine.office.toggleLight(side)) {
             this.#audio.play('error.wav', 0.5);
           }
@@ -54,16 +58,77 @@ export class OfficeView {
     const leftZone = document.getElementById('officecameraleft');
     const rightZone = document.getElementById('officecameraright');
     if (leftZone) {
-      leftZone.addEventListener('mouseenter', () => this.#setPanDirection(-1));
+      leftZone.addEventListener('mouseenter', () => {
+        if (this.#engine.phase === 'playing' || this.#engine.phase === 'powerout') {
+          this.#setPanDirection(-1);
+        }
+      });
       leftZone.addEventListener('mouseleave', () => this.#setPanDirection(0));
     }
     if (rightZone) {
-      rightZone.addEventListener('mouseenter', () => this.#setPanDirection(1));
+      rightZone.addEventListener('mouseenter', () => {
+        if (this.#engine.phase === 'playing' || this.#engine.phase === 'powerout') {
+          this.#setPanDirection(1);
+        }
+      });
       rightZone.addEventListener('mouseleave', () => this.#setPanDirection(0));
     }
 
+    window.addEventListener('keydown', (e) => {
+      if (e.repeat) return;
+      const key = e.key.toLowerCase();
+
+      if (key === 'escape') {
+        if (this.#engine.phase === 'playing' || this.#engine.phase === 'paused') {
+          e.preventDefault();
+          this.#engine.togglePause();
+        }
+        return;
+      }
+
+      if (key === 'm') {
+        const muted = this.#audio.toggleMute();
+        this.#engine.eventBus.emit('audio:muteChanged', { muted });
+        return;
+      }
+
+      if (this.#engine.phase !== 'playing') return;
+
+      if (e.code === 'Space') {
+        e.preventDefault();
+        this.#engine.camera.toggleMonitor();
+        return;
+      }
+
+      if (this.#engine.camera.isOpen) return;
+
+      if (key === 'q') {
+        if (this.#engine.office.toggleDoor('left')) {
+          this.#audio.play('SFXBible_12478.wav', 0.25);
+        } else {
+          this.#audio.play('error.wav', 0.5);
+        }
+      } else if (key === 'e') {
+        if (this.#engine.office.toggleDoor('right')) {
+          this.#audio.play('SFXBible_12478.wav', 0.25);
+        } else {
+          this.#audio.play('error.wav', 0.5);
+        }
+      } else if (key === 'a') {
+        if (!this.#engine.office.toggleLight('left')) {
+          this.#audio.play('error.wav', 0.5);
+        }
+      } else if (key === 'd') {
+        if (!this.#engine.office.toggleLight('right')) {
+          this.#audio.play('error.wav', 0.5);
+        }
+      }
+    });
+
     const bus = this.#engine.eventBus;
     bus.on('game:nightStarted', ({ night }) => this.showForNight(night));
+    bus.on('game:paused', () => this.#setPanDirection(0));
+    bus.on('game:returnedToMenu', () => this.stopLoops());
     bus.on('office:doorChanged', ({ side, closed, lightOn }) => {
       this.#animations.playDoor(side, closed);
       this.#updateButtonPanel(side, closed, lightOn);
@@ -73,6 +138,9 @@ export class OfficeView {
       this.#renderOfficeBackground(side, on, occupant);
     });
     bus.on('office:occupantChanged', ({ side, occupant, lightOn }) => {
+      if (!occupant || this.#scaredOccupant[side] !== occupant) {
+        this.#scaredOccupant[side] = null;
+      }
       if (lightOn) {
         this.#renderOfficeBackground(side, true, occupant);
       }
@@ -96,6 +164,7 @@ export class OfficeView {
   showForNight(night) {
     this.stopLoops();
     this.#officeX = 0;
+    this.#scaredOccupant = { left: null, right: null };
     const officeEl = document.getElementById('office');
     if (officeEl) officeEl.style.transform = 'translateX(0px)';
 
@@ -109,13 +178,14 @@ export class OfficeView {
       'doorbuttonsright',
       'doorleft',
       'doorright',
-      'officecameraleft',
       'officecameraright',
     ];
     for (const id of showIds) {
       const el = document.getElementById(id);
       if (el) el.style.display = 'block';
     }
+    const leftPanZone = document.getElementById('officecameraleft');
+    if (leftPanZone) leftPanZone.style.display = 'none';
 
     const gfOverlay = document.getElementById('goldenfreddy-overlay');
     if (gfOverlay) gfOverlay.style.display = 'none';
@@ -216,7 +286,10 @@ export class OfficeView {
       const customLight = charCfg?.assets?.doorLightFrame;
       if (customLight) {
         officeMain.style.backgroundImage = `url('${customLight}')`;
-        this.#audio.play(charCfg.sounds?.windowscare || 'windowscare.wav', 0.65);
+        if (this.#scaredOccupant[side] !== occupantId) {
+          this.#scaredOccupant[side] = occupantId;
+          this.#audio.play(charCfg.sounds?.windowscare || 'windowscare.wav', 0.65);
+        }
         return;
       }
     }

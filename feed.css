@@ -200,7 +200,7 @@ html, body {
 
 #customnight-grid {
   position: absolute;
-  top: 18%;
+  top: 21%;
   left: 5%;
   right: 5%;
   bottom: 18%;
@@ -209,6 +209,90 @@ html, body {
   justify-content: center;
   align-items: center;
   gap: 2.5vw;
+}
+
+.cn-presets {
+  position: absolute;
+  top: 12.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  z-index: 5;
+}
+
+.cn-preset-btn {
+  background: #141414;
+  color: #ddd;
+  border: 1px solid #555;
+  padding: 5px 12px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.cn-preset-btn:hover {
+  background: #2a2a2a;
+  border-color: #fff;
+  color: #fff;
+}
+
+#pauseoverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99990;
+  background: rgba(0, 0, 0, 0.82);
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier New', monospace;
+  color: #fff;
+}
+
+.pause-panel {
+  border: 2px solid #555;
+  background: #0a0a0a;
+  padding: 28px 36px;
+  min-width: min(420px, 86vw);
+  text-align: center;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+}
+
+.pause-panel h2 {
+  margin: 0 0 10px 0;
+  letter-spacing: 6px;
+  color: #e60000;
+}
+
+.pause-controls {
+  font-size: 0.82rem;
+  color: #999;
+  margin: 0 0 22px 0;
+}
+
+.pause-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pause-actions button {
+  background: #141414;
+  color: #eee;
+  border: 1px solid #666;
+  padding: 10px 18px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+.pause-actions button:hover {
+  background: #252525;
+  border-color: #fff;
 }
 
 .cn-card {
@@ -223,6 +307,17 @@ html, body {
   height: 28px;
   width: auto;
   image-rendering: pixelated;
+}
+
+.cn-name-sub {
+  font-family: "Courier New", monospace;
+  font-size: 0.78rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #e6e6e6;
+  text-transform: uppercase;
+  text-shadow: 0 1px 4px #000;
+  margin-top: -6px;
 }
 
 .cn-name-text {

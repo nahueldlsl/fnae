@@ -8,10 +8,10 @@ Esta carpeta centraliza las fotos originales, los fondos base y la configuració
 assets_src/
 ├── base_graphics/       # Fondos limpios de oficina y salas (no editar salvo que quieras cambiar el escenario)
 └── characters/
-    ├── freddy/          # Personaje 1 (Ezequiel Clásico)
-    ├── bonnie/          # Personaje 2 (Ezequiel Buzo Bordó)
-    ├── chica/           # Personaje 3 (Ezequiel Escritorio)
-    ├── foxy/            # Personaje 4 (El Amigo Gritando)
+    ├── freddy/          # Personaje 1 (Ezequiel)
+    ├── bonnie/          # Personaje 2 (Sebastián)
+    ├── chica/           # Personaje 3 (Santi)
+    ├── foxy/            # Personaje 4 (Horacio)
     └── _template/       # Plantilla lista para copiar y crear un 5to+ personaje
 ```
 

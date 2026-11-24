@@ -11,7 +11,7 @@
 
 ## 📖 Sinopsis & Lore
 
-Bienvenido a tu nuevo trabajo de verano en la oficina de vigilancia. Tu tarea es simple: vigilar las cámaras de seguridad desde las 12 AM hasta las 6 AM sin quedarte sin batería... pero algo no anda bien con los animatrónicos de esta pizzería: **todos tienen la cara de Ezequiel**, y su mejor amigo está listo para salir a toda velocidad de la Pirate Cove para darte el susto de tu vida.
+Bienvenido a tu nuevo trabajo de verano en la oficina de vigilancia. Tu tarea es simple: vigilar las cámaras de seguridad desde las 12 AM hasta las 6 AM sin quedarte sin batería... pero algo no anda bien con los animatrónicos de esta pizzería: **Ezequiel y sus amigos (Sebastián, Santi y Horacio)** acechan por los pasillos, listos para salir en cualquier momento y darte el susto de tu vida.
 
 ¿Podrás sobrevivir a las 5 noches, superar la Noche 6 y dominar el desafío 20/20/20/20 de la Noche Personalizada?
 
@@ -22,7 +22,7 @@ Bienvenido a tu nuevo trabajo de verano en la oficina de vigilancia. Tu tarea es
 | Animatrónico | Personaje en FNAE | Comportamiento & Ubicación |
 |---|---|---|
 | 🐻 **Freddy Fazbear** | **Ezequiel** | Comienza en el escenario (**CAM 1A**), avanza sigilosamente en la oscuridad, te acecha en la puerta derecha y canta la caja de música cuando se corta la luz. |
-| 🐰 **Bonnie** | **Ezequiel (Buzo Bordó)** | Rápido y agresivo. Acecha por el pasillo izquierdo y se asoma por la puerta izquierda. Si prendes la luz y lo ves, ¡cierra la puerta de inmediato! |
+| 🐰 **Bonnie** | **Sebastián** | Rápido y agresivo. Acecha por el pasillo izquierdo y se asoma por la puerta izquierda. Si prendes la luz y lo ves, ¡cierra la puerta de inmediato! |
 | 🐥 **Chica** | **Santi** | Merodea por el lado derecho y la cocina (escucharás ollas y platos). Aparece en la puerta derecha con mirada fija. |
 | 🦊 **Foxy** | **Horacio** | Escondido tras la cortina de la Pirate Cove (**CAM 1C**). Si no lo miras con frecuencia, saldrá disparado corriendo por el pasillo (**CAM 2A**) directo hacia tu puerta izquierda. |
 

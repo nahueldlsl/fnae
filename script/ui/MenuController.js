@@ -171,7 +171,8 @@ export class MenuController {
       if (starEl) starEl.style.display = i <= stars ? 'block' : 'none';
     }
 
-    const savedNight = this.#save.getNight();
+    // TEMP: desbloqueo temporal de todas las noches (Continue Noche 5, 6th Night y Custom Night)
+    const savedNight = 7;
     const continueBtn = document.getElementById('continuebutton');
     const continueNight = document.getElementById('continuebuttonnight');
     const continueNum = document.getElementById('continuebuttonnightnumber');
@@ -303,7 +304,8 @@ export class MenuController {
     this.#isLaunching = true;
     this.#stopMenuAnimations();
     this.#audio.stopAll();
-    const nightToPlay = Math.min(5, this.#save.getNight());
+    // TEMP: usar noche 5 en Continue mientras esté el desbloqueo temporal
+    const nightToPlay = Math.min(5, 7);
     this.#launchWithLoading(nightToPlay);
   }
 

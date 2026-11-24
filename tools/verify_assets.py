@@ -114,6 +114,7 @@ def verify_all() -> bool:
         "graphics/rooms/1c/2.webp",
         "graphics/rooms/1c/3.webp",
         "graphics/gameover/gameoverimg.webp",
+        "graphics/newgame.webp",
         "graphics/mainmenu/star.png",
     ]
     for i in range(31):

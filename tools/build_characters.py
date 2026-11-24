@@ -878,6 +878,12 @@ def build_shared_branding(dry_run: bool = False) -> None:
         bg = create_chromatic_aberration(bg, offset=6)
         save_image(bg, GRAPHICS_DIR / "gameover/gameoverimg.webp", quality=85)
 
+    # New Game ("Help Wanted" newspaper screen)
+    ai_ng = _find_first_existing(AI_BRANDING_DIR, ["newgame"]) if AI_BRANDING_DIR.exists() else None
+    if ai_ng is not None:
+        ng_img = ImageOps.fit(load_and_fix_orientation(ai_ng), MENU_SIZE, method=Image.Resampling.LANCZOS)
+        save_image(ng_img, GRAPHICS_DIR / "newgame.webp", quality=90)
+
 
 def build_stage_variants(dry_run: bool = False) -> None:
     """Build combined Show Stage (CAM 1A) character presence variants."""
